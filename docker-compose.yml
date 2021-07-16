@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+
+  mauticdb_latest:
+    restart: always
+    image: percona/percona-server:5.7
+    container_name: mauticdb_test
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecret
+    command:
+      --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    networks:
+      - mautic-net
+
+  automationmonkey_latest:
+    restart: always
+    #image: mautic/mautic
+    image: alainmm89/automationmonkey:latest
+#    container_name: mauticdb_latest
+    container_name: automationmonkey_latest
+    external_links:
+      - mauticdb_latest:mysql
+    depends_on:
+      - mauticdb_latest
+    ports:
+      - 8082:80
+    volumes:
+      - mautic_data:/var/www/html
+    environment:
+      - MAUTIC_DB_HOST=mauticdb_test
+      - MYSQL_PORT_3306_TCP=3306
+      - MAUTIC_DB_USER=root
+      - MAUTIC_DB_PASSWORD=mysecret
+      - MAUTIC_DB_NAME=mautic
+      - MAUTIC_RUN_CRON_JOBS=true
+      - MAUTIC_ADMIN_EMAIL=test@test.ch
+      - MAUTIC_ADMIN_PASSWORD=123456
+    networks:
+      - mautic-net
+
+volumes:
+  mysql_data:
+    driver: local
+  mautic_data:
+    driver: local
+networks:
+  mautic-net:
+    driver: bridge
