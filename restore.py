@@ -1,6 +1,4 @@
-import os, sys, stat
-from distutils.dir_util import copy_tree
-import subprocess
+import os
 
 
 # db container name (I used database via Docker)
@@ -24,9 +22,8 @@ path = os.path.dirname(os.path.abspath(__file__))
 # dump file name
 dump_name = 'dump.sql'
 
-# path to the folder with the script + '/media/.'
+# path to the folder with the script + '/files/.'
 dump_path = os.path.dirname(os.path.abspath(__file__)) + '/files/.'
-# dump_path = os.path.dirname(os.path.abspath(__file__)) + '/media/.'
 
 
 # this function takes the specified parameters and generates a command to download the dump
@@ -37,7 +34,6 @@ def restore(db_container_name, db_name, user, password, dump_name):
 
 def load_media(dump_path, container_name):
     script = f'docker cp {dump_path} {container_name}:/var/www/html/media/files/'
-    # script = f'docker cp {dump_path} {container_name}:/var/www/html/media/.'
     os.system(script)
 
 
@@ -50,3 +46,4 @@ if __name__ == '__main__':
     restore(db_container_name, db_name, user, password, dump_name)
     load_media(dump_path, container_name)
     remove_tmp(container_name)
+    print('restore: completed successfully')

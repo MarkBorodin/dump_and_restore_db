@@ -31,10 +31,10 @@ def get_dump(db_container_name, db_name, user, password, path, dump_name):
 
 def get_media(container_name, path):
     script = f'docker cp {container_name}:/var/www/html/media/files/ {path}'
-    # script = f'docker cp {container_name}:/var/www/html/media/ {path}'
     os.system(script)
 
 
 if __name__ == '__main__':
     get_dump(db_container_name, db_name, user, password, path, dump_name)
     get_media(container_name, path)
+    print('dump: completed successfully')

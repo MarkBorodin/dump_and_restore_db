@@ -1,0 +1,5 @@
+dnspython==2.1.0
+mysql-connector-python==8.0.26
+protobuf==3.17.3
+py3dns==3.2.1
+six==1.16.0

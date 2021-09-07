@@ -14,12 +14,12 @@ services:
       --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
     networks:
       - mautic-net
+    ports:
+      - "3308:3306"
 
   automationmonkey_latest:
     restart: always
-    #image: mautic/mautic
     image: alainmm89/automationmonkey:latest
-#    container_name: mauticdb_latest
     container_name: automationmonkey_latest
     external_links:
       - mauticdb_latest:mysql
@@ -37,7 +37,7 @@ services:
       - MAUTIC_DB_NAME=mautic
       - MAUTIC_RUN_CRON_JOBS=true
       - MAUTIC_ADMIN_EMAIL=test@test.ch
-      - MAUTIC_ADMIN_PASSWORD=123456
+      - MAUTIC_ADMIN_PASSWORD=madmin
     networks:
       - mautic-net
 
