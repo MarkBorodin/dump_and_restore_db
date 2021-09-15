@@ -6,7 +6,7 @@ clone repository:
 ```
 git clone git@github.com:MarkBorodin/dump_and_restore_db.git
 ```
-move to folder "store_identifier":
+move to folder:
 ```
 cd dump_and_restore_db
 ```
